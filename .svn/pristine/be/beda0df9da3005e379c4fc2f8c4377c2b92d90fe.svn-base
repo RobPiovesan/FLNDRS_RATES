@@ -1,0 +1,87 @@
+package RATES;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
+public class SubjectPanel extends JPanel{
+
+
+    SubjectPanel(){
+        JLabel text = new JLabel("Test");
+        add(text);
+    }
+    SubjectPanel(String subjectCode, String subjectName) {
+
+        setLayout(new BorderLayout());
+
+        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        add(sp);
+
+        //sp.setDividerLocation(0.7);
+        //sp.setResizeWeight(1);
+
+        sp.setEnabled(false);
+
+
+
+        //LEFT
+        JPanel subLeft = new JPanel();
+        //subLeft.setLayout(new GridLayout(0,1));
+        subLeft.setBackground(Color.white);
+        subLeft.setLayout(new BoxLayout(subLeft,BoxLayout.Y_AXIS));
+        subLeft.setPreferredSize(new Dimension(1000, 700));
+        JLabel text = new JLabel(subjectCode +" " +subjectName);
+        text.setFont(new Font(text.getFont().getName(), Font.BOLD, 20));
+        subLeft.add(text);//, BorderLayout.WEST);
+
+
+        //RIGHT
+
+
+        JSplitPane rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplit.setSize(100,200);
+        rightSplit.setEnabled(false);
+
+        JPanel subRightTop = new JPanel();
+        subRightTop.setLayout(new BoxLayout(subRightTop,BoxLayout.Y_AXIS));
+
+        subRightTop.setPreferredSize(new Dimension(300, 700));
+        rightSplit.add(subRightTop, BoxLayout.Y_AXIS);
+        rightSplit.setSize(50,50);
+
+        JPanel subRightBottom = new JPanel();
+        subRightTop.setPreferredSize(new Dimension(300, 400));
+
+
+
+        text.setFont(new Font(text.getFont().getName(), Font.BOLD, 20));
+        //subRight.add(text2);//, BorderLayout.WEST);
+        rightSplit.setBottomComponent(subRightBottom);
+        //rightSplit.add(subRightBottom, BoxLayout.Y_AXIS);
+        /*
+        subRight.setLayout(new BoxLayout(subRight, BoxLayout.Y_AXIS));
+        //subRight.setLayout(new BoxLayout(subRight,BoxLayout.Y_AXIS));
+        JLabel text2 = new JLabel("Right");
+        //text2.setAlignmentX(LEFT_ALIGNMENT);
+        text.setFont(new Font(text.getFont().getName(), Font.BOLD, 20));
+        subRight.add(text2);//, BorderLayout.WEST);
+
+        //
+        JPanel evaluate = new JPanel();
+        evaluate.setLayout(new BoxLayout(subRight, BoxLayout.Y_AXIS));
+        JTextArea message = new JTextArea(10,1);
+
+        message.setBackground(Color.BLUE);
+        subRight.add(message);
+        */
+
+        JScrollPane scroll = new JScrollPane(subLeft,VERTICAL_SCROLLBAR_ALWAYS,HORIZONTAL_SCROLLBAR_NEVER);
+        sp.add(scroll);
+        sp.add(rightSplit);
+
+    }
+}

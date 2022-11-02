@@ -1,0 +1,24 @@
+{
+"eval":[
+{
+    "dateTime": "2021-04-26 22:12:48",
+    "classCode": "COMS1001",
+    "evaluationBody": "test",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Academic Writing",
+    "option": "Semnar 2"
+},
+{
+    "dateTime": "2021-04-26 22:13:45",
+    "classCode": "ENGR2881",
+    "evaluationBody": "hello",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Computer Networks",
+    "option": "Senar 2"
+}]}

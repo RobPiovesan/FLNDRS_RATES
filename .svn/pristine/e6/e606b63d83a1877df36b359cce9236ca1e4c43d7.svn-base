@@ -1,0 +1,13 @@
+package RATES;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+
+public class ClassContent extends JPanel {
+
+    ClassContent() {
+        setBackground(Color.lightGray);
+        setSize(50,20);
+    }
+}

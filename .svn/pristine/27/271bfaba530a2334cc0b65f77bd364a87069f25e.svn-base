@@ -1,0 +1,457 @@
+package RATES;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.TimerTask;
+import java.util.Timer;
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
+public class SubjectPanel extends JPanel implements ActionListener {
+
+
+    JFileChooser fc;
+    JPanel cards;
+
+    String[] evalOptions;
+    ArrayList<String> evalOptionsList;
+    Color[] colors = {Color.red, Color.cyan, Color.GREEN, Color.ORANGE};
+
+    JSONArray contentArray;
+
+    String userID = "Rob Piovesan";
+
+    //Subject info
+    String sCode;
+    String sName;
+
+    //Evaluation
+    JTextArea evaluation;
+    String evalBody;
+    //Radio Buttons
+    JRadioButton positive;
+    JRadioButton neutral;
+    JRadioButton negative;
+    JRadioButton invisible;
+    ButtonGroup ratingGroup;
+    //Anon
+    JRadioButton anon;
+    JComboBox combo;
+    JButton submit;
+    JButton attachmentButton;
+    JButton clearAttachment;
+
+    String attachmentPath;
+    File attachment;
+    JLabel fileLabel;
+
+    int scrollHeight = 550;
+
+
+    SubjectPanel(String subjectCode, String subjectName, int index) {
+
+        sCode = subjectCode;
+        sName = subjectName;
+        fc = new JFileChooser();
+
+
+        contentArray = GetClassContent(subjectCode);
+        if (contentArray.length() > 3){
+            int multiplier = (contentArray.length()-3) * 110;
+            scrollHeight += multiplier;
+        }
+
+        ContentPanel[] contentPanels = new ContentPanel[contentArray.length()+1];
+
+        //Gets class teachers from JSON
+        JSONArray teachers = GetClassTeachers(subjectCode);
+        JLabel[] academicLabels = new JLabel[teachers.length()];
+
+
+        //Combining all evaluation options
+        evalOptionsList = new ArrayList<>();
+        evalOptionsList.add("Select option");
+        for(int i = 0; i < contentArray.length();i++){
+            evalOptionsList.add(contentArray.getJSONObject(i).getString("name"));
+        }
+        for(int j = 0; j < teachers.length(); j++){
+            evalOptionsList.add(teachers.getJSONObject(j).get("name").toString());
+        }
+        evalOptionsList.add("Other");
+
+        evalOptions = new String[evalOptionsList.size()];
+        for (int j = 0; j < evalOptionsList.size(); j++) {
+            evalOptions[j] = evalOptionsList.get(j);
+        }
+
+
+        //Layout setups
+        setLayout(new BorderLayout());
+
+        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        sp.setPreferredSize(new Dimension(1200,550));
+        sp.setResizeWeight(1);
+        sp.setEnabled(false);
+        sp.setBorder(null);
+        sp.setDividerSize(1);
+        add(sp);
+
+        //LEFT
+        cards = new JPanel(new CardLayout());
+
+        JPanel subLeft = new JPanel();
+        subLeft.setLayout(new FlowLayout(FlowLayout.LEFT,30,30));
+        subLeft.setBorder(new EmptyBorder(20, 30, 30, 30));
+        subLeft.setBackground(Color.white);
+        subLeft.setPreferredSize(new Dimension(660, scrollHeight));
+        JLabel title = new JLabel("<html><div style=\"font-size:15px\"'>"+subjectCode+"</div><div style=\"font-size:32px\">"+subjectName+"</div</html>");
+        title.setFont(new Font(title.getFont().getFontName(), Font.BOLD, 32));
+        title.setBorder(new EmptyBorder(0,0,0,0));
+        subLeft.add(title);
+
+        JPanel sepPanel = new JPanel();
+        sepPanel.setPreferredSize(new Dimension(630,4));
+        sepPanel.setBackground(colors[index]);
+        subLeft.add(sepPanel);
+
+        for(int x = 0; x < contentArray.length(); x++){
+            contentPanels[x] = new ContentPanel(contentArray.getJSONObject(x).getString("name"),
+                    contentArray.getJSONObject(x).getString("type"),
+                    contentArray.getJSONObject(x).getString("date"),
+                    contentArray.getJSONObject(x).getString("link"),
+                    this
+            );
+            subLeft.add(contentPanels[x]);
+        }
+
+        JScrollPane scroll = new JScrollPane(subLeft,VERTICAL_SCROLLBAR_ALWAYS,HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.LIGHT_GRAY;
+            }
+        });
+
+        //RIGHT TOP
+        JSplitPane rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplit.setDividerSize(1);
+        rightSplit.setSize(100,200);
+        rightSplit.setEnabled(false);
+
+        JPanel subRightTop = new JPanel();
+        subRightTop.setLayout(new BoxLayout(subRightTop,BoxLayout.Y_AXIS));
+        subRightTop.setPreferredSize(new Dimension(300, 200));
+        subRightTop.setMaximumSize(new Dimension(300, 200));
+        JLabel teacherHeading = new JLabel(subjectCode + " - Topic Staff");
+        teacherHeading.setFont(new Font(title.getFont().getFontName(), Font.PLAIN, 22));
+        teacherHeading.setBorder(new EmptyBorder(10, 10, 10, 10));
+        subRightTop.add(teacherHeading);
+
+        for(int y = 0; y < teachers.length();y++){
+            academicLabels[y] = new JLabel("<html><span style=\"font-size:13;text-decoration: underline\">"+teachers.getJSONObject(y).get("role").toString()+"</span> : <span style=\"font-size:13\">"+teachers.getJSONObject(y).get("name").toString()+"</span</html>");
+            academicLabels[y].setBorder(new EmptyBorder(10, 10, 10, 10));
+
+            int finalY = y;
+            academicLabels[y].addMouseListener(new MouseAdapter()
+            {
+                public void mouseReleased(MouseEvent e)
+                {
+                        changeComboBox(teachers.getJSONObject(finalY).get("name").toString());
+                }
+            });
+            subRightTop.add(academicLabels[y]);
+        }
+
+        rightSplit.add(subRightTop, BoxLayout.Y_AXIS);
+
+        //RIGHT BOTTOM
+        JPanel subRightBottomOutside = new JPanel();
+        subRightBottomOutside.setLayout(new FlowLayout(FlowLayout.CENTER,0,10));
+        subRightBottomOutside.setBackground(Color.WHITE);
+        subRightBottomOutside.setPreferredSize(new Dimension(440, 330));
+        subRightBottomOutside.setMinimumSize(new Dimension(440, 330));
+
+        JPanel subRightBottom = new JPanel();
+        subRightBottom.setLayout(new FlowLayout(FlowLayout.LEFT,6,6));
+        subRightBottom.setPreferredSize(new Dimension(400, 330));
+        subRightBottom.setMinimumSize(new Dimension(400, 330));
+        subRightBottom.setBackground(Color.WHITE);
+
+        JLabel evaluationHeading = new JLabel("Submit Evaluation - " + subjectCode);
+        evaluationHeading.setBorder(new EmptyBorder(0,0,0,200));
+        evaluationHeading.setFont(new Font(title.getFont().getFontName(), Font.PLAIN, 18));
+        subRightBottom.add(evaluationHeading);
+
+        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator2.setPreferredSize(new Dimension(390,1));
+        separator2.setForeground(Color.black);
+        subRightBottom.add(separator2);
+
+        JLabel feelingLabel = new JLabel("How do you feel?");
+        feelingLabel.setBackground(Color.WHITE);
+        subRightBottom.add(feelingLabel);
+
+        ratingGroup = new ButtonGroup();
+        invisible = new JRadioButton();
+        invisible.setSelected(true);
+        positive = new JRadioButton("Positive");
+        positive.setBorder(new EmptyBorder(0,0,0,0));
+        positive.setBackground(Color.white);
+        neutral = new JRadioButton("Neutral");
+        neutral.setBackground(Color.white);
+        neutral.setBorder(new EmptyBorder(0,0,0,15));
+        negative = new JRadioButton("Negative");
+        negative.setBorder(new EmptyBorder(0,15,0,15));
+        negative.setBackground(Color.white);
+        ratingGroup.add(negative);
+        ratingGroup.add(neutral);
+        ratingGroup.add(positive);
+        ratingGroup.add(invisible);
+        subRightBottom.add(negative);
+        subRightBottom.add(neutral);
+        subRightBottom.add(positive);
+
+        combo = new JComboBox(evalOptions);
+        combo.setPreferredSize(new Dimension(200,25));
+        subRightBottom.add(combo);
+
+        evaluation = new JTextArea();
+        evaluation.setLineWrap(true);
+        evaluation.setWrapStyleWord(true);
+        evaluation.setPreferredSize(new Dimension(390,160));
+        evaluation.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK,2), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        subRightBottom.add(evaluation);
+
+        anon = new JRadioButton();
+        anon.setText("Submit Anonymously");
+        anon.setBorder(new EmptyBorder(0,0,0,170));
+        anon.setBackground(Color.white);
+        subRightBottom.add(anon);
+
+        submit = new JButton("Submit");
+        submit.addActionListener(this);
+        subRightBottom.add(submit);
+
+        JSeparator separator4 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator4.setPreferredSize(new Dimension(390,1));
+        separator4.setForeground(Color.black);
+        subRightBottom.add(separator4);
+
+        attachmentButton = new JButton("Attach File");
+        attachmentButton.addActionListener(this);
+        subRightBottom.add(attachmentButton);
+
+        clearAttachment = new JButton("Remove");
+        clearAttachment.addActionListener(this);
+        subRightBottom.add(clearAttachment);
+
+        fileLabel = new JLabel("");
+        subRightBottom.add(fileLabel);
+
+
+        subRightBottomOutside.add(subRightBottom);
+        rightSplit.setBottomComponent(subRightBottomOutside);
+
+        cards.add(scroll,"Subject");
+        sp.add(cards);
+        sp.add(rightSplit);
+    }
+
+    private JSONArray GetClassContent(String subjectCode) {
+
+        JSONArray content;
+        String contentJsonPath = "JSON/content.json";
+        try {
+            String contentString = new String((Files.readAllBytes(Paths.get(contentJsonPath))));
+            JSONObject y = new JSONObject(contentString);
+            content = y.getJSONArray(subjectCode);
+            return content;
+        }
+        catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private JSONArray GetClassTeachers(String subjectCode){
+        //Gets class teachers from JSON
+        JSONArray teachers;
+        String academicJsonPath = "JSON/teachers.json";
+        try {
+            String teacherContent = new String((Files.readAllBytes(Paths.get(academicJsonPath))));
+            JSONObject y = new JSONObject(teacherContent);
+            teachers = y.getJSONObject("class").getJSONObject(subjectCode).getJSONArray("teachers");
+            return teachers;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public void changeComboBox(String name){
+        //combo.setSelectedItem();
+        combo.setSelectedIndex(evalOptionsList.indexOf(name));
+
+        combo.setBackground(new Color(189, 255, 194));
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                combo.setBackground(Color.white);
+            }
+        };
+        Timer timer = new Timer();
+        long delay = 1000L;
+        timer.schedule(task, delay);
+
+
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        JButton source = (JButton) e.getSource();
+
+        if(source.equals(clearAttachment)){
+            attachment = null;
+            fileLabel.setText("");
+        }
+
+        if(source.equals(attachmentButton)){
+            try{
+                int returnVal = fc.showOpenDialog(this);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    attachment = fc.getSelectedFile();
+                    fileLabel.setText(attachment.getName());
+                }
+                else {
+                    //ignore
+                }
+            }
+            catch(Exception ignored){
+
+            }
+
+        }
+        if (source.equals(submit)) {
+            if (evaluation.getText().length() == 0 || evaluation.getText().length() > 400 || combo.getSelectedIndex() == 0 || invisible.isSelected()) {
+                if (evaluation.getText().length() == 0) {
+                    evaluation.setBackground(new Color(255, 159, 150));
+                    TimerTask task = new TimerTask() {
+                        public void run() {
+                            evaluation.setBackground(Color.white);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    long delay = 500L;
+                    timer.schedule(task, delay);
+                    JOptionPane.showMessageDialog(this, "Please complete the evaluation body");
+                } else if (evaluation.getText().length() > 400) {
+                    evaluation.setBackground(new Color(255, 159, 150));
+                    TimerTask task = new TimerTask() {
+                        public void run() {
+                            evaluation.setBackground(Color.white);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    long delay = 500L;
+                    timer.schedule(task, delay);
+                    JOptionPane.showMessageDialog(this, "Please submit an evaluation less than 400 characters \n Current : " + evaluation.getText().length());
+                } else if (combo.getSelectedIndex() == 0) {
+                    combo.setBackground(new Color(255, 159, 150));
+                    TimerTask task = new TimerTask() {
+                        public void run() {
+                            combo.setBackground(Color.white);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    long delay = 500L;
+                    timer.schedule(task, delay);
+                    JOptionPane.showMessageDialog(this, "Please select an option from the drop-down menu");
+                } else if (invisible.isSelected()) {
+                    positive.setBackground(new Color(255, 159, 150));
+                    negative.setBackground(new Color(255, 159, 150));
+                    neutral.setBackground(new Color(255, 159, 150));
+                    TimerTask task = new TimerTask() {
+                        public void run() {
+                            positive.setBackground(Color.white);
+                            negative.setBackground(Color.white);
+                            neutral.setBackground(Color.white);
+                        }
+                    };
+                    Timer timer = new Timer();
+                    long delay = 500L;
+                    timer.schedule(task, delay);
+                    JOptionPane.showMessageDialog(this, "Please select either Positive, Neutral, or Negative from the radio buttons");
+                }
+            } else {
+                String feeling = "";
+                boolean anonymous = anon.isSelected();
+                anon.setSelected(false);
+                evalBody = evaluation.getText();
+                evaluation.setText("");
+
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                String dateTime = now.format(formatter);
+
+                if (positive.isSelected()) {
+                    feeling = "Positive";
+                    invisible.setSelected(true);
+                } else if (neutral.isSelected()) {
+                    feeling = "Neutral";
+                    invisible.setSelected(true);
+                } else if (negative.isSelected()) {
+                    feeling = "Negative";
+                    invisible.setSelected(true);
+                }
+
+                if(attachment != null){
+                    Path path = Paths.get("attachments",attachment.getName());
+                    try {
+                        Files.copy(Path.of(attachment.getAbsolutePath()),path);
+                        attachmentPath = "attachments/"+attachment.getName();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                        attachmentPath = "";
+                    }
+                }
+                else{
+                    attachmentPath = "";
+                }
+
+
+                new Evaluation(sCode,sName, anonymous, feeling, evalBody, userID, dateTime, combo.getSelectedItem().toString(), attachmentPath);
+                combo.setSelectedIndex(0);
+                attachment = null;
+                fileLabel.setText("");
+                JOptionPane.showMessageDialog(this, "Thank you for submitting your evaluation");
+            }
+        }
+    }
+}

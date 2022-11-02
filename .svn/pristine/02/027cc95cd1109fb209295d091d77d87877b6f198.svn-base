@@ -1,0 +1,35 @@
+{
+"eval":[
+{
+    "dateTime": "2021-05-04 12:28:34",
+    "classCode": "COMP3771",
+    "evaluationBody": "This seminar was really boring, I almost fell asleep!",
+    "attachment": "",
+    "rating": "Negative",
+    "anonymous": true,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Seminar 1"
+},
+{
+    "dateTime": "2021-05-04 12:30:47",
+    "classCode": "COMP3771",
+    "evaluationBody": "This was a fun and educational workshop, I liked the hands on approach",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Workshop 2"
+},
+{
+    "dateTime": "2021-05-04 12:34:39",
+    "classCode": "ENGR2881",
+    "evaluationBody": "This lecture was good but the mic volume was quite low so it was hard to hear\n\nOn another note - look at this cool attachment",
+    "attachment": "attachments/coolattachment.jpg",
+    "rating": "Neutral",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Computer Networks",
+    "option": "Lecture 2"
+}]}

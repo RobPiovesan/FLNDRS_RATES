@@ -1,0 +1,36 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class RatesMain {
+    public static void main (String[] args) {
+
+        JFrame frame = new JFrame("RATES");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Options");
+        JMenuItem logOut = new JMenuItem("Log out");
+        JMenuItem close = new JMenuItem("Close");
+        menu.add(logOut);
+        menu.add(close);
+        menuBar.add(menu);
+        frame.setJMenuBar(menuBar);
+
+        frame.setResizable(false);
+        frame.add(new LoginPanel());
+        frame.pack();
+        frame.setVisible(true);
+
+
+
+
+
+    }
+}

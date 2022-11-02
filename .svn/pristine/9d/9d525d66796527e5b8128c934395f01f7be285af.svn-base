@@ -1,0 +1,65 @@
+{
+  "class": {
+    "COMP3750": {
+      "teachers": [
+        {
+          "name": "Filip Peterson",
+          "role": "Topic Coordinator"
+        },
+        {
+          "name": "Jerry Roger",
+          "role": "Tutor"
+        },
+        {
+          "name": "Tim Tam",
+          "role": "Teaching Assistant"
+        }
+      ]
+    },
+    "COMP3771": {
+      "teachers": [
+        {
+          "name": "Dennis Damenace",
+          "role": "Topic Coordinator"
+        },
+        {
+          "name": "Jason Bourne",
+          "role": "Workshop Instructor"
+        },
+        {
+          "name": "Scott Feelbad",
+          "role": "Tutor"
+        }
+      ]
+    },
+    "COMS1001": {
+      "teachers": [
+        {
+          "name": "Rob Piovesan",
+          "role": "Topic Coordinator"
+        },
+        {
+          "name": "Johnny Depp",
+          "role": "Teaching Assistant"
+        },
+        {
+          "name": "Will Hunting",
+          "role": "Janitor"
+        }
+      ]
+    },
+    "ENGR2881": {
+      "teachers": [
+        {
+          "name": "Albus Dumbledore",
+          "role": "Headmaster"
+        },
+        {
+          "name": "Elon Musk",
+          "role": "Junior Engineer Assistant"
+        }
+      ]
+    }
+  }
+
+}

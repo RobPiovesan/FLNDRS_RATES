@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ba472d25-f8aa-4f65-ab68-3af394c31b7a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/ProfileImages/TestProfilePhoto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/ProfileImages/TestProfilePhoto.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/TestProfileImages/TestProfilePhoto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Images/TestProfileImages/TestProfilePhoto.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSON/evaluations.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSON/evaluations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JSON/user.json" beforeDir="false" afterPath="$PROJECT_DIR$/JSON/user.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/EvaluationPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/EvaluationPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/ProfilePanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/ProfilePanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/RatesMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/RatesMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RATES/RATES/SubjectPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RATES/EvaluationPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RATES/EvaluationPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RATES/LoginPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RATES/LoginPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RATES/ProfilePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RATES/ProfilePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RATES/RatesMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RATES/RatesMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RATES/SubjectPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RATES/SubjectPanel.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="1qkcZCHZEFM6CsX2SUoTpiS88Rx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/json-20140107.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\piove\Desktop\UNI\2021\S1\COMP3751 Interactive Computer Systems\RATES" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="RatesMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="RATES.RatesMain" />
+      <module name="RATES" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="RATES.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.RatesMain" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\piove\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="C:\Users\piove\Desktop\UNI\2021\S1\COMP3751 Interactive Computer Systems\RATES" />
+          <option name="myCopyRoot" value="C:\Users\piove\Desktop\UNI\2021\S1\COMP3751 Interactive Computer Systems\RATES" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="C:\Users\piove\Desktop\UNI\2021\S1\COMP3751 Interactive Computer Systems\RATES" />
+          <option name="myCopyRoot" value="C:\Users\piove\Desktop\UNI\2021\S1\COMP3751 Interactive Computer Systems\RATES" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ba472d25-f8aa-4f65-ab68-3af394c31b7a" name="Default Changelist" comment="" />
+      <created>1617627082341</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1617627082341</updated>
+    </task>
+    <task id="LOCAL-00001" summary="General Layout started">
+      <created>1617869391926</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617869391926</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Working on setting up the home page UI">
+      <created>1618319382827</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1618319382827</updated>
+    </task>
+    <task id="LOCAL-00003" summary="UI updates">
+      <created>1618325009576</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618325009576</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Creating JSON Database to store class content">
+      <created>1618550881056</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1618550881057</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Created JSON file for teachers">
+      <created>1618553587659</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1618553587659</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Working on JSON storage for submitted evaluations">
+      <created>1618629094251</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1618629094251</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Set up JSON storage of attachments">
+      <created>1618641000772</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1618641000772</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Set up profile page and JSON storage of user details">
+      <created>1618741370900</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1618741370900</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added buttons to add/remove user profile picture. copies the image to a local storage and stores path in JSON for reference">
+      <created>1618747342071</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1618747342071</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Working on UI for profile page">
+      <created>1619015326133</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1619015326133</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Set up profile page form to update user JSON data">
+      <created>1619068217832</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1619068217833</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Updated evaluation options to be the class content + teachers">
+      <created>1619074022025</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1619074022025</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Created history page to view all of the users previous evaluations">
+      <created>1619088601835</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1619088601835</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated the subject content panel">
+      <created>1619420011999</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1619420011999</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Added content links to example HTML">
+      <created>1619425593812</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1619425593812</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added combobox to choose how to order evaluation content">
+      <created>1619441109228</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1619441109229</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Small fixes and added some button icons">
+      <created>1619666598194</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1619666598194</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added in more button icons">
+      <created>1619675481645</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1619675481645</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added in login page and changed UI design on home page">
+      <created>1619685156872</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1619685156872</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Added menu, still need to add actions for options">
+      <created>1619955736792</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1619955736792</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="General Layout started" />
+    <MESSAGE value="Working on setting up the home page UI" />
+    <MESSAGE value="UI updates" />
+    <MESSAGE value="Creating JSON Database to store class content" />
+    <MESSAGE value="Created JSON file for teachers" />
+    <MESSAGE value="Working on JSON storage for submitted evaluations" />
+    <MESSAGE value="Set up JSON storage of attachments" />
+    <MESSAGE value="Set up profile page and JSON storage of user details" />
+    <MESSAGE value="Added buttons to add/remove user profile picture. copies the image to a local storage and stores path in JSON for reference" />
+    <MESSAGE value="Working on UI for profile page" />
+    <MESSAGE value="Set up profile page form to update user JSON data" />
+    <MESSAGE value="Updated evaluation options to be the class content + teachers" />
+    <MESSAGE value="Created history page to view all of the users previous evaluations" />
+    <MESSAGE value="Added refreshing to the history page when the page is reloaded" />
+    <MESSAGE value="Updated the subject content panel" />
+    <MESSAGE value="Added content links to example HTML" />
+    <MESSAGE value="Added combobox to choose how to order evaluation content" />
+    <MESSAGE value="Small fixes and added some button icons" />
+    <MESSAGE value="Added in more button icons" />
+    <MESSAGE value="Added in login page and changed UI design on home page" />
+    <MESSAGE value="Added menu, still need to add actions for options" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added menu, still need to add actions for options" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.nio.file.NoSuchFileException" package="java.nio.file" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

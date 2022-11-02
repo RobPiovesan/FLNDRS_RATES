@@ -1,0 +1,24 @@
+{
+"eval":[
+{
+    "dateTime": "2021-04-22 23:33:39",
+    "classCode": "COMS1001",
+    "evaluationBody": "This is a test evaluation",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Academic Writing",
+    "option": "Other"
+},
+{
+    "dateTime": "2021-04-26 13:41:54",
+    "classCode": "COMP3771",
+    "evaluationBody": "This is another test",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": true,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Tutorial 1"
+}]}

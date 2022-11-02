@@ -1,0 +1,12 @@
+package RATES;
+
+import javax.swing.*;
+
+public class SubjectRight extends JPanel {
+
+    SubjectRight(){
+
+    }
+
+}
+

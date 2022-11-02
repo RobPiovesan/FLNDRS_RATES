@@ -1,0 +1,98 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class MainPanel extends JPanel implements ActionListener{
+
+    JTabbedPane tabbedPane;
+    SubjectPanel[] subjectPanels = new SubjectPanel[4];
+    JLabel tabLabels[] = new JLabel[4];
+
+    String[] subjectCodes = {"COMP3750", "COMP3771", "COMS1001", "ENGR2881"};
+    String[] subjectNames = {"Interactive Computer Systems", "Advanced Database", "Academic Writing", "Computer Networks"};
+    public static JSONArray content;
+
+    MainPanel(){
+
+
+        System.out.println(System.getProperty("user.dir"));
+        String contentJsonPath = "JSON/content.json";
+
+
+        try {
+            String classContent = new String((Files.readAllBytes(Paths.get(contentJsonPath))));
+            JSONObject o = new JSONObject(classContent);
+            content = o.getJSONArray("content");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        UIManager.put("TabbedPane.selected", Color.white);
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0, 0));
+
+        //setPreferredSize(new Dimension(1200,700));
+        setLayout(new BorderLayout());
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setFocusable(false);
+
+
+        //Adds home Panel (make new class for home)
+        tabbedPane.addTab("",new HomePanel());
+        ImageIcon homeIcon = new ImageIcon("Images/homeIcon2.png");
+
+        JLabel homeLabel = new JLabel("",JLabel.CENTER);
+        //homeLabel.set
+        homeLabel.setIcon(homeIcon);
+        homeLabel.setPreferredSize(new Dimension(30,30));
+
+
+
+        tabbedPane.setTabComponentAt(0,homeLabel);
+
+
+        //homeIcon.s
+
+        //tabbedPane.setTabComponentAt(0,);
+
+        for(int i = 0; i < subjectPanels.length; i++){
+            subjectPanels[i] = new SubjectPanel(subjectCodes[i], subjectNames[i], i);
+            tabbedPane.addTab("", subjectPanels[i]);
+            tabbedPane.setBackground(Color.lightGray);
+            tabbedPane.setForeground(Color.white);
+
+            tabLabels[i] = new JLabel(subjectCodes[i]+" | "+subjectNames[i]);
+            tabLabels[i].setPreferredSize(new Dimension(250, 50));
+
+            tabbedPane.setTabComponentAt(i+1, tabLabels[i]);  // tab index, jLabel
+
+        }
+
+        add(tabbedPane);
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}

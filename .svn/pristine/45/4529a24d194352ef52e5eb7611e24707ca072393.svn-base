@@ -1,0 +1,35 @@
+{
+"eval":[
+{
+    "dateTime": "2021-04-22 20:06:47",
+    "classCode": "COMS1001",
+    "evaluationBody": "asdfasdf",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "testUser",
+    "subjectName": "Academic Writing",
+    "option": "Will Hunting"
+},
+{
+    "dateTime": "2021-04-22 20:10:11",
+    "classCode": "COMS1001",
+    "evaluationBody": "asdfasdf   asdf",
+    "attachment": "",
+    "rating": "Neutral",
+    "anonymous": false,
+    "userID": "testUser",
+    "subjectName": "Academic Writing",
+    "option": "Will Hunting"
+},
+{
+    "dateTime": "2021-04-22 20:10:18",
+    "classCode": "COMP3750",
+    "evaluationBody": "BAD",
+    "attachment": "",
+    "rating": "Negative",
+    "anonymous": false,
+    "userID": "testUser",
+    "subjectName": "Interactive Computer Systems",
+    "option": "Filip Peterson"
+}]}

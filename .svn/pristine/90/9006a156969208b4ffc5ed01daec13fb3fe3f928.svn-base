@@ -1,0 +1,66 @@
+{
+  "COMP3750": [
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Lecture 1"
+    },
+    {
+      "date": "8-3-2021",
+      "type": "Video",
+      "name": "Lecture 2"
+    },
+    {
+      "date": "9-3-2021",
+      "type": "Document",
+      "name": "Work Unit 1"
+    },
+    {
+      "date": "15-3-2021",
+      "type": "Video",
+      "name": "Lecture 3"
+    },
+    {
+      "date": "16-3-2021",
+      "type": "Document",
+      "name": "Work Unit 2"
+    }
+  ],
+  "COMP3771" : [
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Seminar 1"
+    },
+    {
+      "date": "15-3-2021",
+      "type": "Video",
+      "name": "Seminar 2"
+    }
+  ],
+  "COMS1001" : [
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Semnar 1"
+    },
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Semnar 2"
+    }
+  ],
+  "ENGR2881" : [
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Senar 1"
+    },
+    {
+      "date": "1-3-2021",
+      "type": "Video",
+      "name": "Senar 2"
+    }
+  ]
+
+}

@@ -1,0 +1,267 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
+
+public class HistoryPanel extends JPanel implements ActionListener {
+
+    JButton homeButton;
+    JButton refreshButton;
+    JPanel theCards;
+
+    JSONArray evaluations;
+
+    int pageHeight;
+    JPanel bodyPanel;
+    JScrollPane scroll;
+    boolean reverse = false;
+
+
+
+    HistoryPanel(JPanel cards) {
+        loadContent(cards);
+    }
+
+    public void loadContent(JPanel cards){
+        this.removeAll();
+        theCards = cards;
+
+        setPreferredSize(new Dimension(1200,570));
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,20, 0));
+        buttonPanel.setPreferredSize(new Dimension(1200,55));
+        buttonPanel.setBackground(Color.white);
+
+
+        String backIconPath = "Images/ButtonIcons/BackButtonIcon.png";
+        homeButton = new JButton();
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(backIconPath));
+            Image dimg = img.getScaledInstance(53, 40, Image.SCALE_SMOOTH);
+            ImageIcon backIcon = new ImageIcon(dimg);
+            homeButton.setIcon(backIcon);
+            homeButton.setBackground(null);
+            homeButton.setBorder(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            homeButton.setText("BACK");
+        }
+        homeButton.setFocusPainted(false);
+        homeButton.addActionListener(this);
+        buttonPanel.add(homeButton);
+
+
+
+
+        String refreshIconPath = "Images/ButtonIcons/RefreshButtonIcon.png";
+        refreshButton = new JButton();
+        BufferedImage img2 = null;
+        try {
+            img2 = ImageIO.read(new File(refreshIconPath));
+            Image dimg = img2.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+            ImageIcon refreshIcon = new ImageIcon(dimg);
+            refreshButton.setIcon(refreshIcon);
+            refreshButton.setBackground(null);
+            refreshButton.setBorder(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            refreshButton.setText("REFRESH");
+        }
+        refreshButton.setFocusPainted(false);
+        refreshButton.addActionListener(this);
+
+
+        buttonPanel.add(refreshButton);
+        add(buttonPanel);
+
+
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titlePanel.setPreferredSize(new Dimension(1200,60));
+        titlePanel.setBackground(Color.white);
+        add(titlePanel);
+
+
+        JPanel comboPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        comboPanel.setPreferredSize(new Dimension(1100,30));
+        comboPanel.setBackground(Color.white);
+        String[] orderOptions = {"Date - Latest First","Date - Oldest First"};
+        JComboBox orderComboBox = new JComboBox(orderOptions);
+        orderComboBox.setSelectedIndex(0);
+        orderComboBox.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                if(orderComboBox.getSelectedIndex() == 0){
+                    reverse = false;
+                    CardLayout cl = (CardLayout)(theCards.getLayout());
+                    cl.show(theCards, "Home");
+                    cl.show(theCards, "History");
+                }
+                if(orderComboBox.getSelectedIndex() == 1){
+                    reverse = true;
+                    CardLayout cl = (CardLayout)(theCards.getLayout());
+                    cl.show(theCards, "Home");
+                    cl.show(theCards, "History");
+                }
+                loadBody();
+            }
+        });
+        comboPanel.add(orderComboBox);
+        add(comboPanel);
+
+        JLabel pageTitle = new JLabel("Evaluation History");
+        pageTitle.setFont(new Font(pageTitle.getFont().getFontName(), Font.BOLD, 40));
+        titlePanel.add(pageTitle);
+
+        loadBody();
+
+
+
+    }
+
+    public void loadBody(){
+
+        try{
+            if(reverse){
+                evaluations = GetEvaluationHistory();
+                evaluations = ReverseEvaluationHistory(evaluations);
+            }
+            else{
+                evaluations = GetEvaluationHistory();
+            }
+
+            if(evaluations.length() < 3){
+                pageHeight = 500;
+            }
+            else{
+                pageHeight = evaluations.length() * 243;
+            }
+        }catch(Exception e){
+            pageHeight = 500;
+            System.out.println("Unable to read evaluation.json file - likely null");
+        }
+
+        try{
+            remove(bodyPanel);
+            remove(scroll);
+        }catch(Exception ignored){
+
+        }
+
+
+        bodyPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,20,20));
+        bodyPanel.setPreferredSize(new Dimension(1100,pageHeight));
+        bodyPanel.setBackground(Color.WHITE);
+        bodyPanel.removeAll();
+
+        try{
+            for(int i = evaluations.length()-1; i >= 0; i--){
+                EvaluationPanel eval = new EvaluationPanel(evaluations.getJSONObject(i).getString("classCode"),
+                        evaluations.getJSONObject(i).getString("userID"),
+                        evaluations.getJSONObject(i).getString("subjectName"),
+                        evaluations.getJSONObject(i).getString("evaluationBody"),
+                        evaluations.getJSONObject(i).getString("rating"),
+                        evaluations.getJSONObject(i).getString("dateTime"),
+                        evaluations.getJSONObject(i).getString("option"),
+                        evaluations.getJSONObject(i).getBoolean("anonymous"),
+                        evaluations.getJSONObject(i).getString("attachment"),
+                        this
+                );
+                bodyPanel.add(eval);
+            }
+        }catch(Exception e){
+            System.out.println("Json file is null");
+        }
+
+        scroll = new JScrollPane(bodyPanel,VERTICAL_SCROLLBAR_ALWAYS,HORIZONTAL_SCROLLBAR_NEVER);
+
+        scroll.setPreferredSize(new Dimension(1100,400));
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.LIGHT_GRAY;
+            }
+        });
+
+
+        add(scroll);
+
+        //This needs to be delayed on a new thread or else it won't work
+        new Thread(() -> {
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            scroll.getVerticalScrollBar().setValue(0);
+        }).start();
+
+        setBackground(Color.WHITE);
+
+    }
+
+    private JSONArray GetEvaluationHistory(){
+
+        JSONArray evaluations;
+        String evaluationsJsonPath = "JSON/evaluations.json";
+        try {
+            String evaluationContent = new String((Files.readAllBytes(Paths.get(evaluationsJsonPath))));
+            JSONObject y = new JSONObject(evaluationContent);
+            evaluations = y.getJSONArray("eval");
+            return evaluations;
+        }
+        catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+
+    }
+    private JSONArray ReverseEvaluationHistory(JSONArray array){
+
+        JSONArray reverseEvaluations = new JSONArray();
+        for (int i = array.length()-1; i >= 0; i--) {
+            reverseEvaluations.put(array.getJSONObject(i));
+        }
+
+        return reverseEvaluations;
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if(source.equals(homeButton)){
+            //Returning to home page
+            loadBody();
+            CardLayout cl = (CardLayout)(theCards.getLayout());
+            cl.show(theCards, "Home");
+        }
+        if(source.equals(refreshButton)){
+            loadBody();
+            //For some reason the GUI freezes when running the loadBody() method
+            //this works as a workaround to unfreeze the GUI
+            CardLayout cl = (CardLayout)(theCards.getLayout());
+            cl.show(theCards, "Home");
+            cl.show(theCards, "History");
+        }
+
+    }
+}

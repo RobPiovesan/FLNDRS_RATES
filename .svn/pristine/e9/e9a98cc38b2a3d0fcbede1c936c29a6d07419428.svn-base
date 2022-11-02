@@ -1,0 +1,202 @@
+package RATES;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.*;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import java.util.ArrayList;
+
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
+public class SubjectPanel extends JPanel{
+
+    String[] evalOptions = {"Teaching Methods","Test 2","Test3","Other"};
+    String[] content = {"Lecture 3", "Work Unit 1", "Lecture 2", "Lecture 1"};
+    //JButton[] contentButtons = new JButton[content.length];
+
+    String[] academics = {"Jason Bourne", "Dennis Damenace", "Jack Ripper"};
+    JLabel[] academicLabels = new JLabel[academics.length];
+
+    Color[] colors = {Color.red, Color.cyan, Color.GREEN, Color.ORANGE};
+
+    ArrayList<String> contents = new ArrayList<String>();
+
+
+
+
+
+
+
+    SubjectPanel(String subjectCode, String subjectName, int index) {
+
+        for(int j = 0; j < MainPanel.content.length(); j++){
+            if(MainPanel.content.getJSONObject(j).get("classCode").toString().equals(subjectCode)){
+                contents.add(MainPanel.content.getJSONObject(j).get("name").toString());
+                System.out.println(contents.get(j));
+            }
+        }
+
+
+        JButton[] contentButtons = new JButton[contents.size()];
+
+        setLayout(new BorderLayout());
+
+        JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        sp.setPreferredSize(new Dimension(1200,550));
+        sp.setResizeWeight(1);
+        sp.setEnabled(false);
+        add(sp);
+
+        //LEFT
+        JPanel subLeft = new JPanel();
+        subLeft.setLayout(new FlowLayout(FlowLayout.LEFT,30,30));
+        subLeft.setBorder(new EmptyBorder(20, 30, 30, 30));
+        subLeft.setBackground(Color.white);
+        subLeft.setPreferredSize(new Dimension(700, 2000));
+
+        JLabel title = new JLabel(subjectCode +" " +subjectName);
+        title.setFont(new Font(title.getFont().getFontName(), Font.BOLD, 35));
+        title.setBorder(new EmptyBorder(0,0,0,0));
+        //title.setBorder(BorderFactory.createLineBorder(colors[index], 5));
+        subLeft.add(title);
+
+        JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
+        separator.setPreferredSize(new Dimension(700,1));
+        //separator.setBorder(BorderFactory.createLineBorder(colors[index], 5));
+        separator.setForeground(colors[index]);
+        subLeft.add(separator);
+
+
+        JLabel subheading = new JLabel("Evaluate Class Content");
+        subheading.setFont(new Font(title.getFont().getFontName(), Font.PLAIN, 20));
+        subheading.setBorder(new EmptyBorder(0,0,0,0));
+        subLeft.add(subheading);
+
+        for(int x = 0; x < contents.size()-1;x++){
+            contentButtons[x] = new JButton();
+            contentButtons[x].setPreferredSize(new Dimension(550,60));
+            contentButtons[x].setText(contents.get(x));
+            contentButtons[x].setFont(new Font(title.getFont().getFontName(), Font.BOLD, 17));
+            contentButtons[x].setBackground(Color.lightGray);
+            subLeft.add(contentButtons[x]);
+        }
+        /*
+        for(int i = 0; i < content.length; i++){
+            contentButtons[i] = new JButton();
+            contentButtons[i].setPreferredSize(new Dimension(550,60));
+            contentButtons[i].setText(content[i]);
+            contentButtons[i].setFont(new Font(title.getFont().getFontName(), Font.BOLD, 17));
+            contentButtons[i].setBackground(Color.lightGray);
+            subLeft.add(contentButtons[i]);
+        }
+        */
+        JScrollPane scroll = new JScrollPane(subLeft,VERTICAL_SCROLLBAR_ALWAYS,HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.LIGHT_GRAY;
+            }
+        });
+
+        //RIGHT TOP
+        JSplitPane rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        rightSplit.setSize(100,200);
+        rightSplit.setEnabled(false);
+
+        JPanel subRightTop = new JPanel();
+        subRightTop.setLayout(new BoxLayout(subRightTop,BoxLayout.Y_AXIS));
+        subRightTop.setPreferredSize(new Dimension(300, 200));
+        subRightTop.setMaximumSize(new Dimension(300, 200));
+
+        for(int i = 0; i < academics.length; i++){
+            academicLabels[i] = new JLabel(academics[i]);
+            academicLabels[i].setBorder(new EmptyBorder(10, 10, 10, 10));
+            subRightTop.add(academicLabels[i]);
+        }
+
+
+        rightSplit.add(subRightTop, BoxLayout.Y_AXIS);
+
+        //RIGHT BOTTOM
+        JPanel subRightBottom = new JPanel();
+        subRightBottom.setLayout(new FlowLayout(FlowLayout.LEFT,6,6));
+        subRightBottom.setPreferredSize(new Dimension(400, 150));
+        subRightBottom.setMinimumSize(new Dimension(400, 150));
+        subRightBottom.setBackground(Color.WHITE);
+
+
+
+        JLabel evaluationHeading = new JLabel("Submit Evaluation - " + subjectCode);
+        evaluationHeading.setBorder(new EmptyBorder(0,0,0,200));
+        evaluationHeading.setFont(new Font(title.getFont().getFontName(), Font.PLAIN, 18));
+        subRightBottom.add(evaluationHeading);
+
+        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator2.setPreferredSize(new Dimension(390,1));
+        subRightBottom.add(separator2);
+
+        JLabel feelingLabel = new JLabel("How do you feel?");
+        feelingLabel.setBackground(Color.WHITE);
+        subRightBottom.add(feelingLabel);
+
+        ButtonGroup ratingGroup = new ButtonGroup();
+        JRadioButton positive = new JRadioButton("Positive");
+        positive.setBorder(new EmptyBorder(0,15,0,15));
+        positive.setBackground(Color.white);
+        JRadioButton neutral = new JRadioButton("Neutral");
+        neutral.setBackground(Color.white);
+        neutral.setBorder(new EmptyBorder(0,0,0,15));
+        JRadioButton negative = new JRadioButton("Negative");
+        negative.setBackground(Color.white);
+        ratingGroup.add(positive);
+        ratingGroup.add(neutral);
+        ratingGroup.add(negative);
+        subRightBottom.add(positive);
+        subRightBottom.add(neutral);
+        subRightBottom.add(negative);
+
+
+
+
+        JComboBox combo = new JComboBox(evalOptions);
+        combo.setPreferredSize(new Dimension(200,25));
+        //combo.setBorder(new EmptyBorder(0,0,0,100));
+        subRightBottom.add(combo);
+
+
+        JTextArea evaluation = new JTextArea(10,35);
+        evaluation.setBorder(BorderFactory.createLineBorder(Color.black));
+        evaluation.setMargin(new Insets(10,10,10,10));
+        subRightBottom.add(evaluation);
+
+        JSeparator separator3 = new JSeparator(SwingConstants.HORIZONTAL);
+        separator3.setPreferredSize(new Dimension(390,1));
+        subRightBottom.add(separator3);
+
+
+        //test.setPreferredSize(new Dimension(110,50));
+        JRadioButton anon = new JRadioButton();
+        anon.setText("Submit Anonymously");
+        anon.setBorder(new EmptyBorder(0,0,0,170));
+        anon.setBackground(Color.white);
+        subRightBottom.add(anon);
+
+        JButton submit = new JButton("Submit");
+        subRightBottom.add(submit);
+
+        rightSplit.setBottomComponent(subRightBottom);
+
+        sp.add(scroll);
+        sp.add(rightSplit);
+
+    }
+}

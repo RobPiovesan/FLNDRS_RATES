@@ -1,0 +1,117 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
+public class ContentPanel extends JPanel implements ActionListener {
+
+    String iconPath;
+    JLabel contentIcon;
+
+
+    ContentPanel(String contentName, String type, String date){
+        //setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
+        //setLayout(new FlowLayout(FlowLayout.CENTER,0,40));
+        setBorder(BorderFactory.createLineBorder(Color.black,2));
+        setPreferredSize(new Dimension(650,80));
+
+
+        contentIcon = new JLabel("");
+        contentIcon.setBorder(new EmptyBorder(0,20,0,20));
+        contentIcon.setPreferredSize(new Dimension(35,35));
+
+        if(type.equals("Video")){
+            iconPath = "Images/ContentIcons/videoIcon.png";
+        }
+        if(type.equals("Document")){
+            iconPath = "Images/ContentIcons/docIcon.png";
+        }
+        if(type.equals("Activity")){
+            iconPath = "Images/ContentIcons/activityIcon.png";
+        }
+
+        BufferedImage img = null;
+        if(!iconPath.equals("")){
+            try {
+                img = ImageIO.read(new File(iconPath));
+                Image dimg = img.getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                ImageIcon profileImage = new ImageIcon(dimg);
+                contentIcon.setIcon(profileImage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        add(contentIcon);
+
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER,10,7));
+        titlePanel.setPreferredSize(new Dimension(140,60));
+        titlePanel.setMaximumSize(new Dimension(140,60));
+        titlePanel.setMinimumSize(new Dimension(140,60));
+        //titlePanel.setBackground(Color.black);
+        add(titlePanel);
+
+        JLabel contentLabel = new JLabel(contentName);
+        contentLabel.setFont(new Font(contentLabel.getFont().getFontName(), Font.BOLD, 18));
+        contentLabel.setBorder(new EmptyBorder(0,0,0,0));
+        titlePanel.add(contentLabel);
+
+        JLabel dateLabel = new JLabel(date);
+        dateLabel.setFont(new Font(contentLabel.getFont().getFontName(), Font.PLAIN, 11));
+        dateLabel.setBorder(new EmptyBorder(0,0,0,0));
+        titlePanel.add(dateLabel);
+
+        JPanel sepPanel = new JPanel();
+        sepPanel.setPreferredSize(new Dimension(1,50));
+        sepPanel.setMaximumSize(new Dimension(1,50));
+        sepPanel.setMinimumSize(new Dimension(1,50));
+        sepPanel.setBackground(Color.BLACK);
+        sepPanel.setBorder(new EmptyBorder(0,20,0,0));
+        add(sepPanel);
+
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,20,0));
+        buttonPanel.setPreferredSize(new Dimension(400,26));
+        buttonPanel.setMaximumSize(new Dimension(400,26));
+        buttonPanel.setMinimumSize(new Dimension(400,26));
+        //buttonPanel.setBackground(Color.BLUE);
+        add(buttonPanel);
+
+
+
+        JButton evaluateButton = new JButton("Evaluate");
+        buttonPanel.add(evaluateButton);
+
+
+        JButton viewButton = new JButton("View Content");
+        buttonPanel.add(viewButton);
+
+        JButton viewEvaluationsButton = new JButton("View Evaluations");
+        buttonPanel.add(viewEvaluationsButton);
+
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+}

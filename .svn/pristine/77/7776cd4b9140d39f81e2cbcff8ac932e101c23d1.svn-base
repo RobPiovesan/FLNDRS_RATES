@@ -1,0 +1,123 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+public class ProfilePanel extends JPanel implements ActionListener {
+
+    JButton homeButton;
+    JPanel theCards;
+
+    JButton changePhoto;
+    JButton removePhoto;
+
+    ProfilePanel(JPanel cards){
+        theCards = cards;
+
+        setPreferredSize(new Dimension(1200,550));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel.setPreferredSize(new Dimension(1200,40));
+        buttonPanel.setBackground(Color.white);
+        homeButton = new JButton("BACK");
+        homeButton.addActionListener(this);
+        buttonPanel.add(homeButton);
+        add(buttonPanel);
+        setBackground(Color.white);
+
+        JSplitPane profileSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        profileSplit.setPreferredSize(new Dimension(1200,550));
+        profileSplit.setEnabled(false);
+        profileSplit.setBorder(null);
+        profileSplit.setDividerSize(0);
+        profileSplit.setBackground(Color.white);
+        add(profileSplit);
+
+        //##############################
+        //Profile Left
+        //##############################
+        JPanel profileLeft = new JPanel();
+        profileLeft.setLayout(new FlowLayout(FlowLayout.CENTER,60,20));
+        profileLeft.setPreferredSize(new Dimension(400,550));
+        profileLeft.setMaximumSize(new Dimension(400,550));
+        profileLeft.setMinimumSize(new Dimension(400,550));
+        profileLeft.setBackground(Color.white);
+        profileSplit.add(profileLeft);
+
+
+        JLabel userIcon = new JLabel("");
+        userIcon.setPreferredSize(new Dimension(220,220));
+
+        //Gets class teachers from JSON
+        String profilePhotoPath = "Images/ProfileImages/default.png";
+        String userJsonPath = "JSON/user.json";
+
+        try {
+            String userContent = new String((Files.readAllBytes(Paths.get(userJsonPath))));
+            JSONObject y = new JSONObject(userContent);
+            profilePhotoPath = y.getJSONObject("userDetails").get("profileImagePath").toString();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(profilePhotoPath));
+            Image dimg = img.getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+            ImageIcon profileImage = new ImageIcon(dimg);
+            userIcon.setIcon(profileImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        userIcon.setPreferredSize(new Dimension(220,220));
+        //userIcon.setBorder(new EmptyBorder(45,45,45,45));
+        profileLeft.add(userIcon);
+
+        changePhoto = new JButton("Change Image");
+        //changePhoto.setMargin(new Insets(10,10,10,10));
+        //changePhoto.setBorder(new EmptyBorder(50,50,50,50));
+        removePhoto = new JButton("Remove Image");
+
+        profileLeft.add(changePhoto);
+        profileLeft.add(removePhoto);
+
+        //##############################
+        //Profile Right
+        //##############################
+        JPanel profileRight = new JPanel();
+        profileRight.setPreferredSize(new Dimension(800,550));
+        profileRight.setMaximumSize(new Dimension(800,550));
+        profileRight.setMinimumSize(new Dimension(800,550));
+        profileRight.setBackground(Color.white);
+        profileSplit.add(profileRight);
+
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if(source.equals(homeButton)){
+            CardLayout cl = (CardLayout)(theCards.getLayout());
+            cl.show(theCards, "Home");
+        }
+    }
+}

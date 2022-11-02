@@ -1,0 +1,36 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "Lecture 1",
+      "classCode": "COMP3750"
+    },
+    {
+      "id": 2,
+      "name": "Lecture 2",
+      "classCode": "COMP3750"
+    },
+    {
+      "id": 3,
+      "name": "Lecture 3",
+      "classCode": "COMP3750"
+    },
+    {
+      "id": 4,
+      "name": "Work Unit 1",
+      "classCode": "COMP3750"
+    },
+    {
+      "id": 5,
+      "name": "Work Unit 2",
+      "classCode": "COMP3750"
+    },
+    {
+      "id": 6,
+      "name": "Don't appear",
+      "classCode": "bla"
+    }
+
+  ]
+
+}

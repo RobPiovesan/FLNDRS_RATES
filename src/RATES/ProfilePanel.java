@@ -1,0 +1,464 @@
+package RATES;
+
+import org.json.JSONObject;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+
+public class ProfilePanel extends JPanel implements ActionListener {
+
+    JPanel theCards;
+
+    String[] genderOptions = {"Male","Female","Non-binary/Other"};
+    String[] areaOfStudy = {"Business, Government and Law","Education, Psychology and Social Work","Humanities, Arts and Social Sciences","Medicine and Public Health","Nursing and Health Sciences","Science and Engineering"};
+
+    JButton homeButton;
+    JButton changePhoto;
+    JButton removePhoto;
+    JButton saveEdit;
+
+    JFileChooser fc;
+    JLabel userIcon;
+
+    JSONObject userData;
+    String userContent;
+    String profilePhotoPath;
+    String userGender;
+    String userPrefName;
+    String areaOfStudyString;
+
+    JTextArea bio;
+    JTextField nameField;
+
+    JComboBox genderComboBox;
+    JComboBox studyComboBox;
+    JSpinner dateSpinner;
+
+    ProfilePanel(JPanel cards){
+        theCards = cards;
+        fc = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
+        fc.setFileFilter(filter);
+
+        setPreferredSize(new Dimension(1200,550));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT,20,0));
+        buttonPanel.setPreferredSize(new Dimension(1200,50));
+        buttonPanel.setBackground(Color.white);
+        String backIconPath = "Images/ButtonIcons/BackButtonIcon.png";
+        homeButton = new JButton();
+        BufferedImage img2 = null;
+        try {
+            img2 = ImageIO.read(new File(backIconPath));
+            Image dimg = img2.getScaledInstance(53, 40, Image.SCALE_SMOOTH);
+            ImageIcon backIcon = new ImageIcon(dimg);
+            homeButton.setIcon(backIcon);
+            homeButton.setBackground(null);
+            homeButton.setBorder(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            homeButton.setText("BACK");
+        }
+        homeButton.setFocusPainted(false);
+        homeButton.addActionListener(this);
+        buttonPanel.add(homeButton);
+        buttonPanel.add(homeButton);
+        add(buttonPanel);
+        setBackground(Color.white);
+
+        JSplitPane profileSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        profileSplit.setPreferredSize(new Dimension(1200,550));
+        profileSplit.setEnabled(false);
+        profileSplit.setBorder(null);
+        profileSplit.setDividerSize(0);
+        profileSplit.setBackground(Color.white);
+        add(profileSplit);
+
+        //##############################
+        //Profile Left
+        //##############################
+        JPanel profileLeft = new JPanel();
+        profileLeft.setLayout(new FlowLayout(FlowLayout.CENTER,60,20));
+        profileLeft.setPreferredSize(new Dimension(400,550));
+        profileLeft.setMaximumSize(new Dimension(400,550));
+        profileLeft.setMinimumSize(new Dimension(400,550));
+        profileLeft.setBackground(Color.white);
+        profileSplit.add(profileLeft);
+
+        userIcon = new JLabel("");
+        userIcon.setPreferredSize(new Dimension(220,220));
+
+
+        profilePhotoPath = "Images/ProfileImages/default.png";
+        String userJsonPath = "JSON/user.json";
+        try {
+            userContent = new String((Files.readAllBytes(Paths.get(userJsonPath))));
+            userData = new JSONObject(userContent);
+            profilePhotoPath = userData.getJSONObject("userDetails").get("profileImagePath").toString();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(profilePhotoPath));
+            Image dimg = img.getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+            ImageIcon profileImage = new ImageIcon(dimg);
+            userIcon.setIcon(profileImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        userIcon.setPreferredSize(new Dimension(220,220));
+        profileLeft.add(userIcon);
+
+        changePhoto = new JButton("Change Image");
+        changePhoto.setBackground(Color.white);
+        changePhoto.addActionListener(this);
+        removePhoto = new JButton("Remove Image");
+        removePhoto.setBackground(Color.white);
+        removePhoto.addActionListener(this);
+
+        profileLeft.add(changePhoto);
+        profileLeft.add(removePhoto);
+
+        JPanel bioPanel = new JPanel();
+        bioPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bioPanel.setPreferredSize(new Dimension(303,170));
+        bioPanel.setBackground(Color.white);
+
+        JLabel bioLabel = new JLabel("Bio");
+        bioLabel.setBorder(new EmptyBorder(0,0,0,255));
+        bioLabel.setFont(new Font(bioLabel.getFont().getFontName(), Font.BOLD, 16));
+        bioPanel.add(bioLabel);
+
+        bio = new JTextArea(7,25);
+        bio.setLineWrap(true);
+        bio.setWrapStyleWord(true);
+        bio.setText(userData.getJSONObject("userDetails").getString("desc"));
+        bio.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        bio.setBackground(new Color(240,240,240));
+
+        bioPanel.add(bio);
+        profileLeft.add(bioPanel);
+
+
+        //##############################
+        //Profile Right
+        //##############################
+        JPanel profileRight = new JPanel();
+        profileRight.setLayout(new FlowLayout(FlowLayout.RIGHT,60,20));
+        profileRight.setPreferredSize(new Dimension(800,550));
+        profileRight.setMaximumSize(new Dimension(800,550));
+        profileRight.setMinimumSize(new Dimension(800,550));
+        profileRight.setBackground(Color.white);
+        profileSplit.add(profileRight);
+
+        JLabel personalDetailsLabel = new JLabel("Personal Details");
+        personalDetailsLabel.setBorder(new EmptyBorder(0,0,0,463));
+        personalDetailsLabel.setFont(new Font(bioLabel.getFont().getFontName(), Font.BOLD, 24));
+        profileRight.add(personalDetailsLabel);
+
+        JSplitPane detailSP = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        detailSP.setPreferredSize(new Dimension(650,270));
+        detailSP.setEnabled(false);
+        detailSP.setBorder(null);
+        detailSP.setDividerSize(0);
+        detailSP.setBackground(Color.lightGray);
+        detailSP.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        JPanel detailsLeft = new JPanel();
+        detailsLeft.setLayout(new FlowLayout(FlowLayout.RIGHT,10,21));
+        detailsLeft.setPreferredSize(new Dimension(200,270));
+        detailsLeft.setMaximumSize(new Dimension(200,270));
+        detailsLeft.setMinimumSize(new Dimension(200,270));
+        detailSP.add(detailsLeft, JSplitPane.LEFT);
+
+        JPanel detailsLeftTop = new JPanel();
+        detailsLeftTop.setPreferredSize(new Dimension(200,1));
+        detailsLeft.add(detailsLeftTop);
+
+        JPanel detailsRight = new JPanel();
+        detailsRight.setLayout(new FlowLayout(FlowLayout.LEFT,20,20));
+        detailsRight.setPreferredSize(new Dimension(450,270));
+        detailsRight.setMaximumSize(new Dimension(450,270));
+        detailsRight.setMinimumSize(new Dimension(450,270));
+        detailSP.add(detailsRight, JSplitPane.RIGHT);
+
+        JPanel detailsRightTop = new JPanel();
+        detailsRightTop.setPreferredSize(new Dimension(200,1));
+        detailsRight.add(detailsRightTop);
+
+        JLabel nameLabel = new JLabel("Preferred name");
+        nameLabel.setFont(new Font(nameLabel.getFont().getFontName(), Font.PLAIN, 18));
+        nameLabel.setBorder(new EmptyBorder(0,0,0,0));
+        detailsLeft.add(nameLabel);
+
+        JLabel genderLabel = new JLabel("Gender");
+        genderLabel.setFont(new Font(genderLabel.getFont().getFontName(), Font.PLAIN, 18));
+        detailsLeft.add(genderLabel);
+
+        JLabel dobLabel = new JLabel("Date of Birth");
+        dobLabel.setFont(new Font(dobLabel.getFont().getFontName(), Font.PLAIN, 18));
+        dobLabel.setBorder(new EmptyBorder(0,40,0,0));
+        detailsLeft.add(dobLabel);
+
+        JLabel studyLabel = new JLabel("Area of Study");
+        studyLabel.setFont(new Font(studyLabel.getFont().getFontName(), Font.PLAIN, 18));
+        detailsLeft.add(studyLabel);
+
+        nameField = new JTextField(28);
+        userPrefName = userData.getJSONObject("userDetails").getString("prefName");
+        nameField.setText(userPrefName);
+        nameField.setBackground(Color.white);
+        nameField.setMargin(new Insets(3,4,3,4));
+        detailsRight.add(nameField);
+
+        JLabel empty = new JLabel();
+        empty.setBorder(new EmptyBorder(0,0,0,50));
+        detailsRight.add(empty);
+
+        genderComboBox = new JComboBox(genderOptions);
+        userGender = userData.getJSONObject("userDetails").getString("Gender");
+        if(userGender.equals("Male")){
+            genderComboBox.setSelectedIndex(0);
+        }else if(userGender.equals("Female")){
+            genderComboBox.setSelectedIndex(1);
+        }else if(userGender.equals("Non-binary/Other")){
+            genderComboBox.setSelectedIndex(2);
+        }
+        userData.getJSONObject("userDetails").getString("Gender");
+        genderComboBox.setPreferredSize(new Dimension(130,25));
+        genderComboBox.setBackground(Color.white);
+        detailsRight.add(genderComboBox);
+
+        JLabel empty2 = new JLabel();
+        empty2.setBorder(new EmptyBorder(0,0,0,180));
+        detailsRight.add(empty2);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date dob;
+        String dateInString = userData.getJSONObject("userDetails").getString("DOB");
+        try {
+            dob = formatter.parse(dateInString);
+        } catch (Exception ex) {
+            dob = new Date(2000, 01, 01); //Default date
+            ex.printStackTrace();
+        }
+        dateSpinner = new JSpinner(new SpinnerDateModel(dob, null, null, Calendar.MONTH));
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");
+        dateSpinner.setEditor(editor);
+        dateSpinner.setPreferredSize(new Dimension(100,27));
+        detailsRight.add(dateSpinner);
+
+        JLabel dateFormatLabel = new JLabel("(DD/MM/YYYY)");
+        dateFormatLabel.setBorder(new EmptyBorder(0,0,0,180));
+        detailsRight.add(dateFormatLabel);
+
+        studyComboBox = new JComboBox(areaOfStudy);
+        studyComboBox.setPreferredSize(new Dimension(270,25));
+        studyComboBox.setBackground(Color.white);
+        setAreaOfStudy();
+
+        detailsRight.add(studyComboBox);
+
+        profileRight.add(detailSP);
+
+        saveEdit = new JButton("Save");
+        saveEdit.setBackground(Color.white);
+        saveEdit.addActionListener(this);
+        profileRight.add(saveEdit,JSplitPane.RIGHT);
+    }
+
+    private void setAreaOfStudy(){
+        areaOfStudyString = userData.getJSONObject("userDetails").getString("areaOfStudy");
+        switch(areaOfStudyString) {
+            case "Business, Government and Law":
+                studyComboBox.setSelectedIndex(0);
+                break;
+            case "Education, Psychology and Social Work":
+                studyComboBox.setSelectedIndex(1);
+                break;
+            case "Humanities, Arts and Social Sciences":
+                studyComboBox.setSelectedIndex(2);
+                break;
+            case "Medicine and Public Health":
+                studyComboBox.setSelectedIndex(3);
+                break;
+            case "Nursing and Health Sciences":
+                studyComboBox.setSelectedIndex(4);
+                break;
+            case "Science and Engineering":
+                studyComboBox.setSelectedIndex(5);
+                break;
+        }
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if(source.equals(homeButton)){
+            //Resetting the details if they were not saved
+            userPrefName = userData.getJSONObject("userDetails").getString("prefName");
+            nameField.setText(userPrefName);
+            userGender = userData.getJSONObject("userDetails").getString("Gender");
+            if(userGender.equals("Male")){
+                genderComboBox.setSelectedIndex(0);
+            }else if(userGender.equals("Female")){
+                genderComboBox.setSelectedIndex(1);
+            }else if(userGender.equals("Non-binary/Other")){
+                genderComboBox.setSelectedIndex(2);
+            }
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date dob;
+            String dateInString = userData.getJSONObject("userDetails").getString("DOB");
+            try {
+                dob = formatter.parse(dateInString);
+            } catch (Exception ex) {
+                dob = new Date(2000, 01, 01); //Default date
+                ex.printStackTrace();
+            }
+            dateSpinner.setValue(dob);
+
+
+            bio.setText(userData.getJSONObject("userDetails").getString("desc"));
+            setAreaOfStudy();
+
+            //Returning to home page
+            CardLayout cl = (CardLayout)(theCards.getLayout());
+            cl.show(theCards, "Home");
+        }
+
+        if(source.equals(saveEdit)){
+            userData.getJSONObject("userDetails").put("prefName", nameField.getText());
+            userData.getJSONObject("userDetails").put("Gender", genderComboBox.getSelectedItem().toString());
+
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String spinnerValue = formatter.format(dateSpinner.getValue());
+            userData.getJSONObject("userDetails").put("DOB", spinnerValue);
+
+            userData.getJSONObject("userDetails").put("desc", bio.getText());
+            userData.getJSONObject("userDetails").put("areaOfStudy", studyComboBox.getSelectedItem().toString());
+            try {
+                FileWriter myWriter = new FileWriter("JSON/user.json");
+                myWriter.write(userData.toString(4));
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (Exception exception) {
+                System.out.println("An error occurred.");
+                exception.printStackTrace();
+            }
+
+            JOptionPane.showMessageDialog(this, "Changes Saved");
+
+        }
+
+        if(source.equals(removePhoto)){
+            userData.getJSONObject("userDetails").put("profileImagePath", "Images/ProfileImages/default.png");
+            System.out.println(userData);
+            try {
+                FileWriter myWriter = new FileWriter("JSON/user.json");
+                myWriter.write(userData.toString(4));
+                myWriter.close();
+                System.out.println("Successfully wrote to the file.");
+            } catch (Exception exception) {
+                System.out.println("An error occurred.");
+                exception.printStackTrace();
+            }
+
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(userData.getJSONObject("userDetails").getString("profileImagePath")));
+                Image dimg = img.getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+                ImageIcon profileImage = new ImageIcon(dimg);
+                userIcon.setIcon(profileImage);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+            try{
+                File dir = new File("Images/ProfileImages");
+                for(File file: dir.listFiles()){
+                    if (!file.isDirectory() && !file.getName().equals("default.png")) {
+                        file.delete();
+                    }
+                }
+            }catch(Exception ignored){
+
+            }
+
+        }
+
+        if(source.equals(changePhoto)){
+            try{
+                int returnVal = fc.showOpenDialog(this);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    File newImage = fc.getSelectedFile();
+
+
+                    if(newImage != null){
+                        Path path = Paths.get("Images/ProfileImages",newImage.getName());
+                        try {
+                            Files.copy(Path.of(newImage.getAbsolutePath()),path);
+                            profilePhotoPath = "Images/ProfileImages/"+newImage.getName();
+                        } catch (Exception Exception) {
+
+                            profilePhotoPath = "Images/ProfileImages/default.png";
+                        }
+                    }
+                    else{
+                        profilePhotoPath = "Images/ProfileImages/default.png";
+                    }
+
+                    userData.getJSONObject("userDetails").put("profileImagePath", profilePhotoPath);
+                    System.out.println(userData);
+                    try {
+                        FileWriter myWriter = new FileWriter("JSON/user.json");
+                        myWriter.write(userData.toString(4));
+                        myWriter.close();
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (Exception exception) {
+                        System.out.println("An error occurred.");
+                        exception.printStackTrace();
+                    }
+
+                    BufferedImage img = null;
+                    try {
+                        img = ImageIO.read(new File(userData.getJSONObject("userDetails").getString("profileImagePath")));
+                        Image dimg = img.getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+                        ImageIcon profileImage = new ImageIcon(dimg);
+                        userIcon.setIcon(profileImage);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                }
+                else {
+                    //ignore
+                }
+            }
+            catch(Exception ignored){
+            }
+        }
+
+
+
+    }
+}

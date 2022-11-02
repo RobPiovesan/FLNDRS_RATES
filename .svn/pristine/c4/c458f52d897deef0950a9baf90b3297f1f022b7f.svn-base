@@ -1,0 +1,19 @@
+package RATES;
+
+import javax.swing.*;
+
+public class RatesMain {
+    public static void main (String[] args) {
+        JFrame frame = new JFrame("RATES");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setResizable(false);
+        //frame.
+
+        frame.add(new HomePanel());
+        frame.pack();
+        frame.setVisible(true);
+
+
+    }
+}

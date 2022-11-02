@@ -1,0 +1,29 @@
+{
+"eval":[
+{
+    "dateTime": "2021-04-17T12:39:48.781424300",
+    "classCode": "COMS1001",
+    "evaluationBody": "test 1",
+    "rating": "neutral",
+    "anonymous": true,
+    "userID": "testUser",
+    "option": "Teaching Methods"
+},
+{
+    "dateTime": "2021-04-17T12:39:56.267204100",
+    "classCode": "COMS1001",
+    "evaluationBody": "test 2",
+    "rating": "negative",
+    "anonymous": true,
+    "userID": "testUser",
+    "option": "Teaching Methods"
+},
+{
+    "dateTime": "2021-04-17T12:40:06.331215400",
+    "classCode": "ENGR2881",
+    "evaluationBody": "asdfasdf",
+    "rating": "negative",
+    "anonymous": true,
+    "userID": "testUser",
+    "option": "Other"
+}]}

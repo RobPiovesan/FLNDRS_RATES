@@ -1,0 +1,22 @@
+{
+"eval":[
+{
+    "dateTime": "2021-04-18T13:27:35.363026500",
+    "classCode": "COMS1001",
+    "evaluationBody": "sdfgs",
+    "attachment": "",
+    "rating": "neutral",
+    "anonymous": false,
+    "userID": "testUser",
+    "option": "Test 2"
+},
+{
+    "dateTime": "2021-04-18T13:27:48.176165",
+    "classCode": "COMS1001",
+    "evaluationBody": "asdfa",
+    "attachment": "attachments/70s-poster.jpg",
+    "rating": "neutral",
+    "anonymous": false,
+    "userID": "testUser",
+    "option": "Test 2"
+}]}

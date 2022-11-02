@@ -1,0 +1,68 @@
+package RATES;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+
+public class HomePanel extends JPanel {
+
+    JLabel ratesLogo;
+    JLabel ratesSubtitle;
+
+    HomePanel(){
+        setBackground(Color.white);
+        JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        sp.setPreferredSize(new Dimension(1200,550));
+        sp.setEnabled(false);
+        sp.setDividerSize(0);
+        sp.setBackground(Color.white);
+        add(sp);
+
+        //TOP SPLIT PANE
+        JSplitPane topSp = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        topSp.setPreferredSize(new Dimension(1200,250));
+        topSp.setEnabled(false);
+        topSp.setDividerSize(0);
+        topSp.setBackground(Color.white);
+        add(topSp);
+
+        //ButtonPanel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setPreferredSize(new Dimension(1200,30));
+        buttonPanel.setBackground(Color.white);
+        JButton profileButton = new JButton("Profile");
+        JButton historyButton = new JButton("History");
+        JButton messageButton = new JButton("Messages");
+        buttonPanel.add(profileButton);
+        buttonPanel.add(historyButton);
+        buttonPanel.add(messageButton);
+        topSp.add(buttonPanel, JSplitPane.TOP);
+
+        //LOGO section
+        JPanel homeLogos = new JPanel();
+        homeLogos.setBackground(Color.white);
+        homeLogos.setPreferredSize(new Dimension(1200, 250));
+
+        ratesLogo = new JLabel("RATES");
+        ratesLogo.setFont(new Font(ratesLogo.getFont().getFontName(), Font.BOLD, 80));
+        ratesLogo.setBorder(new EmptyBorder(0,400,5,400));
+        homeLogos.add(ratesLogo);
+
+        ratesSubtitle = new JLabel("Real-time Activity and Teaching Evaluation System");
+        ratesSubtitle.setFont(new Font(ratesLogo.getFont().getFontName(), Font.ITALIC, 22));
+        homeLogos.add(ratesSubtitle);
+
+        topSp.add(homeLogos,JSplitPane.BOTTOM);
+
+        sp.add(topSp);
+
+
+
+        //BOTTOM HALF
+        JPanel homeBottom = new JPanel();
+        homeBottom.setBackground(Color.white);
+        homeBottom.setPreferredSize(new Dimension(1200, 250));
+        sp.add(homeBottom,JSplitPane.BOTTOM);
+    }
+
+}

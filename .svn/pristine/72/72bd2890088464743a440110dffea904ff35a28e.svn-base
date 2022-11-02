@@ -1,0 +1,125 @@
+package RATES;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
+
+
+public class HistoryPanel extends JPanel implements ActionListener {
+
+    JButton homeButton;
+    JPanel theCards;
+
+    JSONArray evaluations;
+
+    int pageHeight;
+
+    HistoryPanel(JPanel cards) {
+        loadContent(cards);
+    }
+
+    public void loadContent(JPanel cards){
+        this.removeAll();
+        theCards = cards;
+
+        try{
+            evaluations = GetEvaluationHistory();
+            if(evaluations.length() < 3){
+                pageHeight = 500;
+            }
+            else{
+                pageHeight = evaluations.length() * 275;
+            }
+        }catch(Exception e){
+            pageHeight = 500;
+            System.out.println("Unable to read evaluation.json file - likely null");
+        }
+
+
+        setPreferredSize(new Dimension(1200,530));
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel.setPreferredSize(new Dimension(1200,40));
+        buttonPanel.setBackground(Color.white);
+        homeButton = new JButton("BACK");
+        homeButton.addActionListener(this);
+        buttonPanel.add(homeButton);
+        add(buttonPanel);
+
+        JPanel bodyPanel = new JPanel(new FlowLayout(FlowLayout.CENTER,20,20));
+        bodyPanel.setPreferredSize(new Dimension(1100,pageHeight));
+        bodyPanel.setBackground(Color.WHITE);
+
+        try{
+            for(int i = evaluations.length()-1; i >= 0; i--){
+                EvaluationPanel eval = new EvaluationPanel(evaluations.getJSONObject(i).getString("classCode"),
+                        evaluations.getJSONObject(i).getString("userID"),
+                        evaluations.getJSONObject(i).getString("subjectName"),
+                        evaluations.getJSONObject(i).getString("evaluationBody"),
+                        evaluations.getJSONObject(i).getString("rating"),
+                        evaluations.getJSONObject(i).getString("dateTime"),
+                        evaluations.getJSONObject(i).getString("option"),
+                        evaluations.getJSONObject(i).getBoolean("anonymous"),
+                        evaluations.getJSONObject(i).getString("attachment")
+                );
+                bodyPanel.add(eval);
+            }
+        }catch(Exception e){
+            System.out.println("Json file is null");
+        }
+
+        JScrollPane scroll = new JScrollPane(bodyPanel,VERTICAL_SCROLLBAR_ALWAYS,HORIZONTAL_SCROLLBAR_NEVER);
+
+        scroll.setPreferredSize(new Dimension(1100,480));
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
+        scroll.setBorder(null);
+        scroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = Color.LIGHT_GRAY;
+            }
+        });
+
+        add(scroll);
+        setBackground(Color.WHITE);
+    }
+
+    private JSONArray GetEvaluationHistory(){
+        //Gets class teachers from JSON
+        JSONArray evaluations;
+        String evaluationsJsonPath = "JSON/evaluations.json";
+        try {
+            String evaluationContent = new String((Files.readAllBytes(Paths.get(evaluationsJsonPath))));
+            JSONObject y = new JSONObject(evaluationContent);
+            evaluations = y.getJSONArray("eval");
+            return evaluations;
+        }
+        catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton source = (JButton) e.getSource();
+        if(source.equals(homeButton)){
+            //Returning to home page
+            loadContent(theCards);
+            CardLayout cl = (CardLayout)(theCards.getLayout());
+            cl.show(theCards, "Home");
+        }
+    }
+}

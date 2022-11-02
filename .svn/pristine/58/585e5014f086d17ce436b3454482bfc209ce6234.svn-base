@@ -1,0 +1,12 @@
+{
+  "userDetails":
+    {
+      "userID": "piov0007",
+      "prefName": "Rob Piovesan",
+      "Gender": "Male",
+      "profileImagePath": "Images/ProfileImages/default.png",
+      "desc": "",
+      "DOB": "",
+      "areaOfStudy": ""
+    }
+}

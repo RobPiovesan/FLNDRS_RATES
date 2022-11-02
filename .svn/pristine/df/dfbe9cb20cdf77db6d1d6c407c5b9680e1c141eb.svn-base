@@ -1,0 +1,46 @@
+{
+"eval":[
+{
+    "dateTime": "01-04-2021 10:28:34",
+    "classCode": "COMP3771",
+    "evaluationBody": "This seminar was really boring, I almost fell asleep!",
+    "attachment": "",
+    "rating": "Negative",
+    "anonymous": true,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Seminar 1"
+},
+{
+    "dateTime": "02-05-2021 12:30:47",
+    "classCode": "COMP3771",
+    "evaluationBody": "This was a fun and educational workshop, I liked the hands on approach",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Workshop 2"
+},
+{
+    "dateTime": "04-05-2021 18:34:39",
+    "classCode": "ENGR2881",
+    "evaluationBody": "This lecture was good but the mic volume was quite low so it was hard to hear\n\nOn another note - look at this cool attachment",
+    "attachment": "attachments/coolattachment.jpg",
+    "rating": "Neutral",
+    "anonymous": false,
+    "userID": "Rob Piovesan",
+    "subjectName": "Computer Networks",
+    "option": "Lecture 2"
+},
+{
+    "dateTime": "05-05-2021 16:55:09",
+    "classCode": "COMP3771",
+    "evaluationBody": "Jason has been a great instructor so far in the semester, he makes sure that the students all have a solid understanding of the topic",
+    "attachment": "",
+    "rating": "Positive",
+    "anonymous": true,
+    "userID": "Rob Piovesan",
+    "subjectName": "Advanced Database",
+    "option": "Jason Bourne"
+}]}

@@ -1,0 +1,15 @@
+package RATES;
+
+import javax.swing.*;
+
+public class SubjectLeft extends JPanel {
+
+    SubjectLeft(String subjectName){
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        JLabel title = new JLabel(subjectName);
+        add(title);
+
+        setSize(500,800);
+    }
+
+}
